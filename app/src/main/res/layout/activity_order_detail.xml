@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".order_detail.OrderDetailActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+        <android.support.v7.widget.Toolbar
+
+            android:id="@+id/tool_bar"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:titleTextColor="@android:color/white"
+            app:contentInsetStartWithNavigation="0dp"
+            android:theme="@style/BaseTheme"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimaryDark"
+            android:minHeight="?attr/actionBarSize">
+
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_below="@+id/appBar"
+        android:scrollbarThumbVertical="@color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.CardView
+                app:cardUseCompatPadding="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:padding="5dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                   <TextView
+
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:padding="5dp"
+                       android:id="@+id/txt_site_id"
+                       android:text="side id"
+                       android:fontFamily="@font/roboto"
+                       android:textColor="@color/black"
+                       android:textSize="16sp"/>
+
+                    <TextView
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txt_created_by"
+                        android:text="created by"
+                        android:fontFamily="@font/roboto"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:id="@+id/txt_created_date"
+                        android:text="date"
+                        android:fontFamily="@font/roboto"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+
+                app:cardUseCompatPadding="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:padding="5dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:padding="5dp"
+                        android:text="View Orders Item"
+                        android:fontFamily="@font/roboto"
+                        android:textColor="@color/colorPrimaryCenter"
+                        android:textSize="17sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <View
+                        android:background="@color/view_line"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/orderRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    </android.support.v7.widget.RecyclerView>
+
+                </LinearLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                app:cardUseCompatPadding="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:padding="5dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:padding="5dp"
+                            android:text="Vendor"
+                            android:fontFamily="@font/roboto"
+                            android:textColor="@color/colorPrimaryCenter"
+                            android:textSize="17sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <ImageView
+                            android:visibility="gone"
+                            android:foreground="@drawable/ripple_effect"
+                            android:padding="7dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_alignParentRight="true"
+                            android:id="@+id/imgEdit"
+                            android:src="@drawable/ic_edit_black_24dp"/>
+
+                    </RelativeLayout>
+
+
+
+                    <View
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/view_line"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/vendorRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    </android.support.v7.widget.RecyclerView>
+
+                </LinearLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                app:cardUseCompatPadding="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:padding="5dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Order Description"
+                        android:fontFamily="@font/roboto"
+                        android:textColor="@color/colorPrimaryCenter"
+                        android:textSize="17sp"
+                        android:padding="5dp"/>
+
+                    <TextView
+                        android:id="@+id/order_description"
+                        android:fontFamily="@font/roboto"
+                        android:textSize="15sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="descrption text"
+                        android:padding="5dp"/>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <Button
+                android:foreground="@drawable/ripple_effect"
+                android:id="@+id/btnVerifyDelivery"
+                android:text="Verify Delivery"
+                android:textColor="@color/white"
+                android:fontFamily="@font/roboto"
+                android:background="@color/colorPrimary"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</RelativeLayout>

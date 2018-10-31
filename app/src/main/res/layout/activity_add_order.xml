@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".order_section.AddOrderActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+        <android.support.v7.widget.Toolbar
+
+            android:id="@+id/tool_bar"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:titleTextColor="@android:color/white"
+            app:contentInsetStartWithNavigation="0dp"
+            android:theme="@style/BaseTheme"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimaryDark"
+            android:minHeight="?attr/actionBarSize">
+
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:scrollbarThumbVertical="@color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:padding="10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="18sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Site : "/>
+
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/spinner_background">
+
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:id="@+id/site_spinner"
+                        style="@style/Widget.AppCompat.DropDownItem.Spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:spinnerMode="dropdown"
+                        app:backgroundTint="@android:color/black">
+
+                    </android.support.v7.widget.AppCompatSpinner>
+
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txt"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="18sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Location : "/>
+
+                <TextView
+                    android:layout_marginLeft="7dp"
+                    android:layout_toRightOf="@+id/txt"
+                    android:layout_weight="1"
+                    android:id="@+id/txt_location"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="18sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+            </RelativeLayout>
+
+            <TextView
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Particulars : "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/item_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <TextView
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Description : "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:gravity="start"
+                android:padding="10dp"
+                android:hint="Enter order description"
+                android:background="@drawable/edit_text_style"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:id="@+id/edit_desc"/>
+
+            <Button
+                android:textColor="@color/white"
+                android:layout_width="150dp"
+                android:layout_height="42dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:background="@color/colorPrimaryDark"
+                android:fontFamily="@font/roboto"
+                android:foreground="@drawable/ripple_effect"
+                android:onClick="submit"
+                android:text="Add Order"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearence.App.TextInputLayout" />
+
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+</LinearLayout>
