@@ -27,6 +27,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.creatu.sapnakoghar.MainActivity;
 import com.creatu.sapnakoghar.R;
 import com.creatu.sapnakoghar.model_class.SiteModelClass;
 import com.creatu.sapnakoghar.model_class.SiteResults;
@@ -100,8 +101,24 @@ public class AddBillActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        OrderCode = getIntent().getExtras().getString("order_code");
-        OrderId = getIntent().getExtras().getString("order_id");
+        try{
+            OrderCode = getIntent().getExtras().getString("order_code");
+            OrderId = getIntent().getExtras().getString("order_id");
+            if (OrderCode != null){
+                txt_orderQuantity.setVisibility(View.VISIBLE);
+                order_spinner.setVisibility(View.GONE);
+                rel.setVisibility(View.GONE);
+                txt_orderQuantity.setText(OrderCode);
+                order_id = OrderId;
+            }else{
+                txt_orderQuantity.setVisibility(View.GONE);
+                order_spinner.setVisibility(View.VISIBLE);
+                rel.setVisibility(View.VISIBLE);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
 
         imgBill.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,17 +129,7 @@ public class AddBillActivity extends AppCompatActivity {
             }
         });
 
-        if (OrderCode != null){
-            txt_orderQuantity.setVisibility(View.VISIBLE);
-            order_spinner.setVisibility(View.GONE);
-            rel.setVisibility(View.GONE);
-            txt_orderQuantity.setText(OrderCode);
-            order_id = OrderId;
-        }else{
-            txt_orderQuantity.setVisibility(View.GONE);
-            order_spinner.setVisibility(View.VISIBLE);
-            rel.setVisibility(View.VISIBLE);
-        }
+
 
         //// asking for permission to read the gallery
 
@@ -356,8 +363,28 @@ public class AddBillActivity extends AppCompatActivity {
                         if (status == 200){
                             String results = jsonObject.optString("results");
                             progress.hideProgress();
+
+
+
                             Toast.makeText(AddBillActivity.this, results, Toast.LENGTH_SHORT).show();
-                            finish();
+
+                            try{
+
+                                SharedPreferences sharedPreferences = getSharedPreferences("UserInfo",MODE_PRIVATE);
+                                String  user_type = sharedPreferences.getString("user_type",null);
+                                if (user_type.equals("site_engineer")){
+                                    finish();
+
+                                }else{
+                                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                                }
+
+
+                            }catch (NullPointerException e){
+                                e.printStackTrace();
+                            }
+
+
 
                         }else if (status == 400){
                             progress.hideProgress();

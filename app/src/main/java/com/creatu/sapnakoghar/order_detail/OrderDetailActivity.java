@@ -23,6 +23,7 @@ import com.creatu.sapnakoghar.progressDialog.ShowProgress;
 import com.creatu.sapnakoghar.retrofit_api_client.RetrofitClient;
 import com.creatu.sapnakoghar.retrofit_api_interface.ApiInterface;
 import com.creatu.sapnakoghar.vendor_section.AddVendorActivity;
+import com.creatu.sapnakoghar.verify_class.VerifyActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -59,11 +60,22 @@ public class OrderDetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        orderCode = getIntent().getExtras().getString("order_code");
-        orderId = getIntent().getExtras().getString("order_id");
+        try{
+            orderCode = getIntent().getExtras().getString("order_code");
 
-        getSupportActionBar().setTitle(orderCode);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            orderId = getIntent().getExtras().getString("order_id");
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+
+        if (orderCode.equals("")){
+            getSupportActionBar().setTitle("Order Details");
+        }else{
+            getSupportActionBar().setTitle(orderCode);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        }
+
 
         imgEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +94,7 @@ public class OrderDetailActivity extends AppCompatActivity {
         btnVerifyDelivery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), AddBillActivity.class);
+                Intent intent = new Intent(getApplicationContext(), VerifyActivity.class);
                 intent.putExtra("order_code",orderCode);
                 intent.putExtra("order_id",orderId);
                 startActivity(intent);
@@ -119,6 +131,40 @@ public class OrderDetailActivity extends AppCompatActivity {
                     txtSiteId.setText("Site Id : "+response.body().getResults().getOrder_detail().getSite_info().getId());
                     txt_created_by.setText("Created By : "+response.body().getResults().getOrder_detail().getUpdated_info().getName());
                     txt_created_date.setText("Date : "+response.body().getResults().getOrder_detail().getCreated_at());
+                    String orderStatus = response.body().getResults().getOrder_detail().getOrder_status();
+                    System.out.println("OrderStatus : "+orderStatus);
+                    if (orderStatus.equals("create_site_engineer")){
+                        if (user_type.equals("admin")){
+                            imgEdit.setVisibility(View.VISIBLE);
+                            btnVerifyDelivery.setVisibility(View.GONE);
+                        }else{
+                            imgEdit.setVisibility(View.GONE);
+                            btnVerifyDelivery.setVisibility(View.GONE);
+                        }
+
+                    }else if (orderStatus.equals("update_admin")){
+
+                        if (user_type.equals("site_engineer")){
+                            imgEdit.setVisibility(View.GONE);
+                            btnVerifyDelivery.setVisibility(View.GONE);
+                        }else{
+                            imgEdit.setVisibility(View.GONE);
+                            btnVerifyDelivery.setVisibility(View.VISIBLE);
+                        }
+
+                    }else if (orderStatus.equals("verify_vender")){
+                        if (user_type.equals("vendor")){
+                            imgEdit.setVisibility(View.GONE);
+                            btnVerifyDelivery.setVisibility(View.GONE);
+                        }else{
+                            imgEdit.setVisibility(View.GONE);
+                            btnVerifyDelivery.setVisibility(View.VISIBLE);
+                        }
+                    }else{
+                        btnVerifyDelivery.setVisibility(View.GONE);
+                        imgEdit.setVisibility(View.GONE);
+                    }
+
                     txt_description.setText(response.body().getResults().getOrder_detail().getRemark());
                 }
                 if (response.body().getResults().getOrder_particulars().size() != 0){
@@ -133,21 +179,21 @@ public class OrderDetailActivity extends AppCompatActivity {
                 }
 
                 if (response.body().getResults().getOrder_venders().size() != 0){
-                    if (user_type.equals("site")){
-                        btnVerifyDelivery.setVisibility(View.GONE);
-                        imgEdit.setVisibility(View.GONE);
-                    }else if (user_type.equals("vendor")){
-                        imgEdit.setVisibility(View.GONE);
-                    }
-                    imgEdit.setVisibility(View.GONE);
-                    btnVerifyDelivery.setVisibility(View.VISIBLE);
+//                    if (user_type.equals("site")){
+//                        btnVerifyDelivery.setVisibility(View.GONE);
+//                        imgEdit.setVisibility(View.GONE);
+//                    }else if (user_type.equals("vendor")){
+//                        imgEdit.setVisibility(View.GONE);
+//                    }
+//                    imgEdit.setVisibility(View.GONE);
+//                    btnVerifyDelivery.setVisibility(View.VISIBLE);
                     VendorAdapter vendorAdapter = new VendorAdapter(getApplicationContext(),response.body().getResults().getOrder_venders());
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                     vendorRecyclerView.setLayoutManager(layoutManager);
                     vendorRecyclerView.setAdapter(vendorAdapter);
                 }else{
-                    btnVerifyDelivery.setVisibility(View.GONE);
-                    imgEdit.setVisibility(View.VISIBLE);
+//                    btnVerifyDelivery.setVisibility(View.GONE);
+//                    imgEdit.setVisibility(View.VISIBLE);
                     Toast.makeText(OrderDetailActivity.this, "No Vendor data found", Toast.LENGTH_SHORT).show();
 
                 }

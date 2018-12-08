@@ -5,6 +5,7 @@ package com.creatu.sapnakoghar.retrofit_api_interface;
 import com.creatu.sapnakoghar.model_class.ParticularModelClass;
 import com.creatu.sapnakoghar.model_class.SiteModelClass;
 import com.creatu.sapnakoghar.model_class.bill_model_class.BillModelClass;
+import com.creatu.sapnakoghar.model_class.notification_model_class.NotificationModelClass;
 import com.creatu.sapnakoghar.model_class.order_detail_model_class.OrderDetailModelClass;
 import com.creatu.sapnakoghar.model_class.order_model_class.OrderModelClass;
 import com.creatu.sapnakoghar.model_class.vendor_model_class.VendorModelClass;
@@ -48,6 +49,11 @@ public interface ApiInterface {
     @GET("order/{orderId}")
     Call<OrderDetailModelClass> getOrderDetails(@Path("orderId") String orderId);
 
+    /// get notifications ///
+    @GET("get-all-notifications/{userId}")
+    Call<NotificationModelClass> getNotification(@Path("userId") String userId);
+
+
     @Headers("Content-Type: application/json")
     @POST("add-new-order/{userId}")
     Call<JsonObject> addOrder(@Body JsonObject add_new_order, @Path("userId") String userId);
@@ -59,5 +65,9 @@ public interface ApiInterface {
     //add-new-bill
     @POST("add-new-bill/{userId}")
     Call<ResponseBody> addBill (@Body RequestBody body,@Path("userId") String userId);
+
+    @Headers("Content-Type: application/json")
+    @POST("verify-order/{userId}")
+    Call<JsonObject> verifyOrder(@Body JsonObject add_new_order, @Path("userId") String userId);
 
 }

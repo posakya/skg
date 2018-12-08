@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "579253108082",
+    "firebase_url": "https://sapanakoghar-2a218.firebaseio.com",
+    "project_id": "sapanakoghar-2a218",
+    "storage_bucket": "sapanakoghar-2a218.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:579253108082:android:e0049041f3966663",
+        "android_client_info": {
+          "package_name": "com.creatu.sapnakoghar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "579253108082-hhtkidmtcuicot1kc76e5radm0fc36el.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaxSwqdpfFGbr2BMQnrUDCOeB0fxT-6D8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

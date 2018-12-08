@@ -57,10 +57,10 @@ public class Home extends Fragment {
 
         try {
             SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserInfo",MODE_PRIVATE);
-            String  userId = sharedPreferences.getString("id",null);
+            String userId = sharedPreferences.getString("id",null);
             String userType = sharedPreferences.getString("user_type",null);
 
-            if (userType.equals("vendor")){
+            if (userType.equals("vender")){
                 add_button.setVisibility(View.GONE);
             }
 

@@ -1,9 +1,11 @@
 package com.creatu.sapnakoghar.authentication;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
@@ -41,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
 
     ShowProgress progress;
     SharedPreferences sharedPreferences;
-
+    String androidId,TokenId;
     private static final int MY_PERMISSIONS_REQUEST_STORAGE = 0;
 
     @Override
@@ -49,9 +51,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Random random = new Random();
-        i = random.nextInt(5000 - 1000)+1000;
-        fcm_token = String .valueOf(i);
+//        Random random = new Random();
+//        i = random.nextInt(5000 - 1000)+1000;
+//        fcm_token = String .valueOf(i);
+
+        androidId = Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID);
 
         telephonyManager = (TelephonyManager) getSystemService(LoginActivity.this.TELEPHONY_SERVICE);
 
@@ -88,6 +92,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
 
+
         deviceId = telephonyManager.getDeviceId();
         System.out.println("Device Id : "+deviceId);
         System.out.println("Device Token : "+fcm_token);
@@ -120,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
 //        startActivity(new Intent(LoginActivity.this, MainActivity.class));
     }
 
-    public void postLogin(String email,String password,String fcm_token,String deviceId){
+    public void postLogin(String email,String password,String fcm_token,String deviceId,String deviceType){
 
         progress.showProgress();
 
@@ -129,6 +134,7 @@ public class LoginActivity extends AppCompatActivity {
         jsonObject.addProperty("password",password);
         jsonObject.addProperty("fcm_token",fcm_token);
         jsonObject.addProperty("device_id",deviceId);
+        jsonObject.addProperty("device_type",deviceType);
 
         System.out.println("JsonData : "+jsonObject);
 
@@ -212,7 +218,16 @@ public class LoginActivity extends AppCompatActivity {
         }else if (password.equals("")){
             Toast.makeText(this, "Please enter password", Toast.LENGTH_SHORT).show();
         }else{
-            postLogin(email,password,fcm_token,deviceId);
+            try {
+                SharedPreferences sharedpreferences = getSharedPreferences("TOKEN", Context.MODE_PRIVATE);
+                fcm_token = sharedpreferences.getString("token",null);
+                if (fcm_token != null){
+                    postLogin(email,password,fcm_token,deviceId,"1");
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
         }
     }
 }

@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView drawer_image,register_image,logOut,userImage;
     String email,username;
     SharedPreferences sharedPreferences;
+    String user_type;
 
 
     @Override
@@ -157,6 +158,19 @@ public class MainActivity extends AppCompatActivity {
         }
     });
 
+        try{
+
+        SharedPreferences sharedPreferences = getSharedPreferences("UserInfo",MODE_PRIVATE);
+        String  userId = sharedPreferences.getString("id",null);
+        user_type = sharedPreferences.getString("user_type",null);
+        String name = sharedPreferences.getString("name",null);
+
+      txt_userName.setText(name+"("+user_type+")");
+
+
+    }catch (NullPointerException e){
+        e.printStackTrace();
+    }
 
 }
 
@@ -197,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-            case 4:
+            case 6:
 
                 Intent rateIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getApplicationContext().getPackageName()));
                 startActivity(rateIntent);
@@ -228,10 +242,10 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
 
-            case 6:
+            case 4:
                 AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this,AlertDialog.THEME_HOLO_LIGHT).create();
 
-                alertDialog.setTitle("PdSmart Education");
+                alertDialog.setTitle("Sapna Ko Ghar");
                 alertDialog.setMessage(Html.fromHtml("Would you like to logout?"));
 
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "No",
@@ -244,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "LogOut",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                SharedPreferences sharedPreferences = getSharedPreferences("UserProfile", Context.MODE_PRIVATE);
+                                SharedPreferences sharedPreferences = getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
                                 sharedPreferences.edit().clear().commit();
                                 register_image.setVisibility(View.VISIBLE);
                                 logOut.setVisibility(View.GONE);

@@ -14,10 +14,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.creatu.sapnakoghar.R;
-import com.creatu.sapnakoghar.adapter.BillAdapter;
+import com.creatu.sapnakoghar.adapter.NotificationAdapter;
 import com.creatu.sapnakoghar.adapter.OrderAdapter;
-import com.creatu.sapnakoghar.bill_section.AddBillActivity;
-import com.creatu.sapnakoghar.model_class.bill_model_class.BillModelClass;
+import com.creatu.sapnakoghar.model_class.notification_model_class.NotificationModelClass;
 import com.creatu.sapnakoghar.model_class.order_model_class.OrderModelClass;
 import com.creatu.sapnakoghar.order_section.AddOrderActivity;
 import com.creatu.sapnakoghar.progressDialog.ShowProgress;
@@ -33,70 +32,65 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BillFragment extends Fragment {
+public class NotificationFragment extends Fragment {
 
 
-   View view;
+    View view;
     RecyclerView recyclerView;
     FloatingActionButton add_button;
     ShowProgress progress;
-    SharedPreferences sharedPreferences;
-    BillAdapter adapter;
-    String  userId;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.recycler_view, container, false);
+        view = inflater.inflate(R.layout.fragment_notification, container, false);
 
         recyclerView = view.findViewById(R.id.recycler_view);
         add_button = view.findViewById(R.id.add_button);
+
+        add_button.setVisibility(View.GONE);
 
         progress = new ShowProgress(getActivity());
 
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), AddBillActivity.class));
+                startActivity(new Intent(getActivity(), AddOrderActivity.class));
             }
         });
 
         try {
             SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserInfo",MODE_PRIVATE);
-            userId = sharedPreferences.getString("id",null);
+            String userId = sharedPreferences.getString("id",null);
             String userType = sharedPreferences.getString("user_type",null);
 
-            if (userType.equals("site_engineer")){
-                add_button.setVisibility(View.GONE);
-            }else{
-                add_button.setVisibility(View.VISIBLE);
-            }
+
 
             if (userId != null){
-                getBillOrders(userId);
+                getNotifications(userId);
             }
 
         }catch (NullPointerException e){
             e.printStackTrace();
         }
 
-        return  view;
+        return view;
     }
 
-    public void getBillOrders(String userId){
-
+    public void getNotifications(String userId){
         progress.showProgress();
 
-        ApiInterface orderInterface = RetrofitClient.getFormData().create(ApiInterface.class);
+        ApiInterface notificationInterface = RetrofitClient.getFormData().create(ApiInterface.class);
 
-        Call<BillModelClass> orderModelClassCall = orderInterface.getBills(userId,"1","100000");
+        Call<NotificationModelClass> notificationModelClassCall = notificationInterface.getNotification(userId);
 
-        orderModelClassCall.enqueue(new Callback<BillModelClass>() {
+        notificationModelClassCall.enqueue(new Callback<NotificationModelClass>() {
             @Override
-            public void onResponse(Call<BillModelClass> call, Response<BillModelClass> response) {
-                if (response.body().getResults().getOrder_bills().size() != 0){
-                    adapter = new BillAdapter(getActivity(),response.body().getResults().getOrder_bills());
+            public void onResponse(Call<NotificationModelClass> call, Response<NotificationModelClass> response) {
+                if (response.body().getResults().getNotifications().size() != 0){
+                    NotificationAdapter adapter = new NotificationAdapter(getActivity(),response.body().getResults().getNotifications());
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setAdapter(adapter);
@@ -108,7 +102,7 @@ public class BillFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<BillModelClass> call, Throwable t) {
+            public void onFailure(Call<NotificationModelClass> call, Throwable t) {
                 progress.hideProgress();
                 Toast.makeText(getActivity(), "Response : "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
